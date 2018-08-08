@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="CRP 458 - Final Project QM">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Final Project - QM</title>
+	
+
+<!--External Data-->	
+<script src="https://indicator.extension.iastate.edu/z_cjs/teachingGIS/webGIS/studentFeaturesDB.php?userID=qgmill&theFunction=responseVar"></script>
+	
+
+	
+<!--External CSS-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="http://129.186.142.145/indicators/classes/leaflet-awesome-markers/dist/leaflet.awesome-markers.css">
+	
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+	
+	
+	<!--External JS-->	
+	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+
+   <script src="http://129.186.142.145/indicators/classes/leaflet-awesome-markers/dist/leaflet.awesome-markers.js"></script>	
+	
+   <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+    <script src="/js/leaflet-0.7.2/leaflet.ajax.min.js"></script>
+    <script src="https://qmille.github.io/CRP-458/Mass_2014.json"></script>
+    
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
+
+    <link rel="stylesheet" href="https://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <script src="https://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+	
+<style>
+    #map {
+
+     position:relative;
+     width: 990px;
+     height: 400px;
+
+}
+#container {
+	background-color: white;
+	width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+   border-style: solid;
+   border-width: 5px;
+}
+#header, #footer {
+	clear: both;
+	padding: 10px;
+	background-color: slategrey;
+	color: white;
+	text-align: center;
+}
+ 
+</style>
+	
+<style>.legend { text-align: left; line-height: 18px; color: #555; background-color: ghostwhite; padding: 8px;} .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; background-color: whitesmoke;}</style>
+</head>
+<body>
+
+    <div id ="container">
+        <div id="header">
+            <h2>Mass Shootings in the United States 2014-2017</h2>
+            <h3>CRP 458 Final Project - Quincy Miller</h3>
+            </div>
+        <br>
+	<br>
+<div id="map"></div>
+    </div>
+    <br>
+    <br>
+    
+    <div id ="footer">
+    <h4>Project Details</h4>
+
+    <li>Mass shootings are roughly defined as shooting incidents where four or more people are involved (injured/killed)</li>
+    <li>All mass shooting data were obtained from http://www.gunviolencearchive.org/</li>
+    <li>The data was were then geocoded using ESRI ArcMap 10.4.1 on my laptop, followed by being translated into geoJSON with http://mapshaper.org/</li>
+        
+    </div>
+    
+    <script>
+        
+var map = L.map('map', {
+    center: [37.8, -96],
+    zoom: 4
+});
+        
+
+//Mass Shootings-State 2014
+$.getJSON("https://qmille.github.io/CRP-458/Mass_2014.json", function(geojson) {
+  var mass2014 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+    },
+      style:style,
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Number of Mass Shootings: <b>"  + feature.properties.Count_+ "</b><br>State: <b>" + feature.properties.NAME
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+controlLayers.addOverlay(mass2014, '2014 Mass Shootings');
+});
+L.control.scale().addTo(map);
+        
+        ///////////////////////////////////////////////////////////////////////////////
+        
+//Mass Shootings-State 2015
+        
+$.getJSON("https://qmille.github.io/CRP-458/Mass_2015.json", function(geojson) {
+  var mass2015 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+    },
+      style:style,
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Number of Mass Shootings: <b>"  + feature.properties.Count_+ "</b><br>State: <b>" + feature.properties.NAME
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+controlLayers.addOverlay(mass2015, '2015 Mass Shootings');
+});
+        ///////////////////////////////////////////////////////////////////////////////
+        
+//Mass Shootings-State 2016
+        
+$.getJSON("https://qmille.github.io/CRP-458/Mass_2016.json", function(geojson) {
+  var mass2016 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+    },
+      style:style,
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Number of Mass Shootings: <b>"  + feature.properties.Count_+ "</b><br>State: <b>" + feature.properties.NAME
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+controlLayers.addOverlay(mass2016, '2016 Mass Shootings');
+});
+        
+         ///////////////////////////////////////////////////////////////////////////////
+        
+//Mass Shootings-State 2017
+        
+$.getJSON("https://qmille.github.io/CRP-458/Mass_2017.json", function(geojson) {
+  var mass2017 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+    },
+      style:style,
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Number of Mass Shootings: <b>"  + feature.properties.Count_+ "</b><br>State: <b>" + feature.properties.NAME
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+controlLayers.addOverlay(mass2017, '2017 Mass Shootings');
+});
+        
+// get color depending on number of mass shootings
+        
+	function getColor(d) {
+		return d > 30 ? '#ff0800' :
+				d > 25  ? '#ff6600' :
+				d > 20  ? '#ff9400' :
+				d > 15  ? '#ffbf00' :
+				d > 10  ? '#ffe100' :
+				d > 5   ? '#f6ff00' :
+				d > 0   ? '#59ff00' :
+				          '#c9c9c9';
+	}
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: 'white',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: getColor(feature.properties.Count_)
+		};
+	}
+        
+        var legend = L.control({position: 'bottomleft'});
+
+	legend.onAdd = function (map) {
+
+		var div = L.DomUtil.create('div', 'info legend'),
+			grades = [1, 5, 10, 15, 20, 25, 30],
+			labels = ['<strong> Number of Mass Shootings </strong>'],
+			from, to;
+
+		for (var i = 0; i < grades.length; i++) {
+			from = grades[i];
+			to = grades[i + 1];
+
+			labels.push(
+				'<i style="background:' + getColor(from + 1) + '"></i> ' +
+				from + (to ? '&ndash;' + to : '+'));
+		}
+
+		div.innerHTML = labels.join('<br>');
+		return div;
+	};
+
+	legend.addTo(map);
+        
+        ///////////////////////////////////////////////////////////////////////////////
+        
+    //2014 Points
+        
+$.getJSON("https://qmille.github.io/CRP-458/Spots_2014.json", function(geojson) {
+  var points2014 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+      return new L.Marker(latLng, {
+      })
+    },
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Date: <b>"  + feature.properties.Incident_D + "</b><br>City/County <b>"  + feature.properties.City_Or_Co + "</b><br>Number Killed: <b>"  + feature.properties.F__Killed + "</b><br>Number Injured: <b>" + feature.properties.F__Injured
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+  controlLayers.addOverlay(points2014, 'Points 2014');
+});
+        
+//2015 Points
+        
+$.getJSON("https://qmille.github.io/CRP-458/Spots_2015.json", function(geojson) {
+  var points2015 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+      return new L.Marker(latLng, {
+      })
+    },
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Date: <b>"  + feature.properties.Incident_D + "</b><br>City/County <b>"  + feature.properties.City_Or_Co + "</b><br>Number Killed: <b>"  + feature.properties.F__Killed + "</b><br>Number Injured: <b>" + feature.properties.F__Injured
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+  controlLayers.addOverlay(points2015, 'Points 2015');
+});
+        
+        //2016 Points
+        
+$.getJSON("https://qmille.github.io/CRP-458/Spots_2016.json", function(geojson) {
+  var points2016 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+      return new L.Marker(latLng, {
+      })
+    },
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Date: <b>"  + feature.properties.Incident_D + "</b><br>City/County <b>"  + feature.properties.City_Or_Co + "</b><br>Number Killed: <b>"  + feature.properties.F__Killed + "</b><br>Number Injured: <b>" + feature.properties.F__Injured
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+  controlLayers.addOverlay(points2016, 'Points 2016');
+});
+     
+//2017 Points
+        
+$.getJSON("https://qmille.github.io/CRP-458/Spots_2017.json", function(geojson) {
+  var points2017 = L.geoJson(geojson, {
+    pointToLayer: function(feature, latLng) {
+      return new L.Marker(latLng, {
+      })
+    },
+    onEachFeature: function(feature, layer) {
+        htmlText = "</strong>Date: <b>"  + feature.properties.Incident_D + "</b><br>City/County <b>"  + feature.properties.City_Or_Co + "</b><br>Number Killed: <b>"  + feature.properties.F__Killed + "</b><br>Number Injured: <b>" + feature.properties.F__Injured
+      layer.bindPopup(htmlText)
+    }
+  });//.addTo(map);
+  controlLayers.addOverlay(points2017, 'Points 2017');
+});
+        
+        
+        ///////////////////////////////////////////////////////////////////////////////
+        
+        //Basemaps
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
+        
+var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+}).addTo(map);
+        
+
+//layer Control
+
+var baseMaps = {
+  "Open Street Map": osm,
+  "Black and White": Stamen_TonerLite,
+  
+};
+
+var controlLayers = L.control.layers(baseMaps).addTo(map);
+
+    
+    
+    </script>
+</body>
+    
+</html>
